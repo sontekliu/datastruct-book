@@ -1,5 +1,6 @@
 # 从数组说起
 
+# 1. 自定义数组
 在日常开发中，我们可能无时无刻都在使用数组，我们都知道数组是有局限性的，比如固定大小，无法扩容，但是你能自己手写一个数组解决上面的痛点呢？
 看过 `Java` 源代码的都知道，`Java` 中的 `ArrayList` 底层实现就是数组，那我们就自己通过数组来实现自己的 `ArrayList` 具体代码见 [码云](https://gitee.com/sontekliu/datastruct-core/blob/master/src/main/java/com/javaliu/collection/array/Array.java) 和
 [Github](https://github.com/sontekliu/datastruct-core/blob/master/src/main/java/com/javaliu/collection/array/Array.java) 
@@ -76,6 +77,7 @@ private void resize(int newCapacity) {
 可以设置成 `2倍`，`1.5倍`，`3倍` 可能更合适一点，当然了此处也没有固定值。
 
 
+# 2. 简单时间复杂度分析
 
 
 
