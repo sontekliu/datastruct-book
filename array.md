@@ -1,9 +1,10 @@
 # 从数组说起
 
 # 1. 自定义数组
+
 在日常开发中，我们可能无时无刻都在使用数组，我们都知道数组是有局限性的，比如固定大小，无法扩容，但是你能自己手写一个数组解决上面的痛点呢？
-看过 `Java` 源代码的都知道，`Java` 中的 `ArrayList` 底层实现就是数组，那我们就自己通过数组来实现自己的 `ArrayList` 具体代码见 [码云](https://gitee.com/sontekliu/datastruct-core/blob/master/src/main/java/com/javaliu/collection/array/Array.java) 和
-[Github](https://github.com/sontekliu/datastruct-core/blob/master/src/main/java/com/javaliu/collection/array/Array.java) 
+
+看过 `Java` 源代码的都知道，`Java` 中的 `ArrayList` 底层实现就是数组，那我们就自己通过数组来实现自己的 `ArrayList` 具体代码见 [码云](https://gitee.com/sontekliu/datastruct-core/blob/master/src/main/java/com/javaliu/collection/array/Array.java) 和 [Github](https://github.com/sontekliu/datastruct-core/blob/master/src/main/java/com/javaliu/collection/array/Array.java) 
 
 其实实现自己的 `ArrayList` 不是我们的目的，关键是我们要分析实现细节，以及其中的时间复杂度。
 
@@ -57,7 +58,7 @@ public E remove(int index) {
 
 关于 `if (size == data.length / 4 && data.length / 2 != 0) ` 还是非常有分析意义的，这等到数组的复杂度分析时，具体再详细说。
 
-* 值得分析的方法 `resize`:
+> 值得分析的方法 `resize`:
 
 ```java
 private void resize(int newCapacity) {
@@ -79,25 +80,20 @@ private void resize(int newCapacity) {
 
 # 2. 简单时间复杂度分析
 
-### 添加操作 O(n)
+### 2.1 添加操作 O(n)
 
-* addLast(e)
+1. addLast(e)
 
-在不考虑扩容的情况下，直接向 `data[size]` 赋值即可，所以是 `O(1)`，也就意味着向数组末尾添加元素所消
-耗的时间和数组的大小(size)是没有关系的，都能在常数时间内完成添加操作。
+在不考虑扩容的情况下，直接向 `data[size]` 赋值即可，所以是 `O(1)`，也就意味着向数组末尾添加元素所消耗的时间和数组的大小(size)是没有关系的，都能在常数时间内完成添加操作。
 
-* addFirst(e)
+2. addFirst(e)
 
-同样在不考虑扩容的情况下，向数组中的头部添加元素，需要将其他元素向后移动一位，所以对应的时间复杂度是
-`O(n)`，即随着数组大小的增加，所消耗的时间也就越多。
+同样在不考虑扩容的情况下，向数组中的头部添加元素，需要将其他元素向后移动一位，所以对应的时间复杂度是 `O(n)`，即随着数组大小的增加，所消耗的时间也就越多。
 
-* add(index, e)
+3. add(index, e)
 
-同样在不考虑扩容的情况下，向数组中添加元素所消耗的时间和 `index` 取值有关，在极端的情况下，如果 `index=size` 时间复
-杂度则是 `O(1)`，如果 `index=0` 则是 `O(n)`，但是此处 `index` 取值是 `0~size` 任意值，并且取得
-`0~size` 值的概率都是相等的，所以此处所消耗的时间应该是 `index` 取值的期望，此处涉及数据概率相关知识
-，有兴趣的同学可以查询相关资料。可简单计算其时间复杂度是 `O(n/2)`，时间复杂度一般省略常数，所以添加
-操作的时间复杂度是: `O(n)`
+同样在不考虑扩容的情况下，向数组中添加元素所消耗的时间和 `index` 取值有关，在极端的情况下，如果 `index=size` 时间复杂度则是 `O(1)`，如果 `index=0` 则是 `O(n)`，但是此处 `index` 取值是 `0~size` 任意值，并且取得
+`0~size` 值的概率都是相等的，所以此处所消耗的时间应该是 `index` 取值的期望，此处涉及数据概率相关知识，有兴趣的同学可以查询相关资料。可简单计算其时间复杂度是 `O(n/2)`，时间复杂度一般省略常数，所以添加操作的时间复杂度是: `O(n)`
 
 综上，可得出如下结论:
 
@@ -109,13 +105,11 @@ private void resize(int newCapacity) {
 | add(index, e) | O(n/2) = O(n) | 涉及数据移动   |
 
 
-从表中来看数组的添加操作整体是 `O(n)`，**通常**时间复杂度分析是关注最糟糕的情况。通常在现实生活中也是如此，
-如从家到公司上班路程最快需要 5 分钟，如果每次上班只提前 5 分钟的话，那样迟到的概率是很高的。
+从表中来看数组的添加操作整体是 `O(n)`，**通常**时间复杂度分析是关注最糟糕的情况。通常在现实生活中也是如此，如从家到公司上班路程最快需要 5 分钟，如果每次上班只提前 5 分钟的话，那样迟到的概率是很高的。
 
-再比如在考试的时候，理论上所有的选择题都可以使用蒙的方式是可以作对的，但是这个可能性太低了，难道考试
-的时候就不准备了，靠蒙就行吗？所以在大多数情况下，考虑最好的情况意义是不大的。
+再比如在考试的时候，理论上所有的选择题都可以使用蒙的方式是可以作对的，但是这个可能性太低了，难道考试的时候就不准备了，靠蒙就行吗？所以在大多数情况下，考虑最好的情况意义是不大的。
 
-### 删除操作 O(n)
+### 2.2 删除操作 O(n)
 
 可根据添加操作得出删除操作的时间复杂度。如下：
 
@@ -128,13 +122,13 @@ private void resize(int newCapacity) {
 
 所以删除的时间复杂度整体是 `O(n)`
 
-## 修改操作 O(1)
+### 2.3 修改操作 O(1)
 
-* set(index, e)
+1. set(index, e)
 
 根据索引就可以找到对应的元素，所以时间复杂度是 `O(1)` 这也是数组的优势，支持随机访问。
 
-### 查找操作 O(n)
+### 2.4 查找操作 O(n)
 
 可根据以上可知查找操作的时间复杂度，如下表：
 
@@ -146,7 +140,7 @@ private void resize(int newCapacity) {
 
 所以查询的时间复杂度整体是 `O(n)`
 
-综上：
+**综上：**
 
 | 增 | O(n)                      |
 |----|---------------------------|
@@ -155,8 +149,7 @@ private void resize(int newCapacity) {
 | 改 | 已知索引O(1);未知索引O(n) |
 | 查 | 已知索引O(1);未知索引O(n) |
 
-所以在使用数组时，尽量让其索引含有一定的语义, 这样就能很好提高数组的性能。
+> 所以在使用数组时，尽量让其索引含有一定的语义, 这样就能很好提高数组的性能。
 
-了解完数组了，再看看链表
 
 
